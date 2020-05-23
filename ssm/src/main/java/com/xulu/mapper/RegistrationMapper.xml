@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xulu.mapper.RegistrationMapper">
+   <select id="createRegId" resultType="int">
+       SELECT seq_reg.nextval as id FROM dual
+   </select>
+    <insert id="create" parameterType="Registration">
+        insert into hims_registration values
+        (#{reg_id},
+        #{patient_id},
+        #{reg_name},
+        #{reg_sex},
+        #{reg_age,jdbcType=NUMERIC},
+        to_date(#{reg_birth,jdbcType=DATE},'yyyy-MM-dd'),
+        #{reg_identity},
+        #{reg_workplace},
+        #{reg_phone},
+        #{carte_vital},
+        #{pre_amount,jdbcType=NUMERIC},
+        #{dep_name},
+        #{operator_uname},
+        #{condition},
+        #{out_flag},
+        '','','','',
+        to_date(#{create_time,jdbcType=DATE},'yyyy-MM-dd hh24:mi:ss'))
+    </insert>
+    <select id="queryReg" resultType="Registration">
+        select * from hims_registration
+    </select>
+    <update id="updateReg" parameterType="Registration">
+        update hims_registration
+        set ward_name = #{ward_name},
+        bed_type = #{bed_type},
+        bed_name = #{bed_name},
+        doc_name = #{doc_name}
+        where reg_id =#{reg_id}
+    </update>
+    <select id="queryRegNameByRegid" parameterType="String" resultType="String">
+        select reg_name from hims_registration where reg_id = #{reg_id}
+    </select>
+    <insert id="createArch" parameterType="Archives">
+        insert into hims_archives values (
+        seq_arch.nextval,#{reg_id},#{reg_name},#{staff_id},
+        to_date(#{create_time,jdbcType=DATE},'yyyy-MM-dd hh24:mi:ss')
+        )
+    </insert>
+    <select id="queryArch" resultType="Archives">
+        select * from archives
+    </select>
+    <select id="queryRegIdByUid" parameterType="String" resultType="String">
+        select reg_id from hims_registration where patient_id = #{patient_id}
+    </select>
+    <select id="queryPatientInfo" parameterType="String" resultType="Registration">
+        select * from hims_registration where reg_id =#{reg_id}
+    </select>
+    <insert id="createOut" parameterType="Out">
+        insert into hims_out (out_id,reg_id,is_cost,is_out) values(
+        seq_out.nextval,#{reg_id},#{is_cost},#{is_out}
+        )
+    </insert>
+    <select id="queryOut" resultType="Out">
+        select * from hims_out
+    </select>
+    <update id="updateOut" parameterType="Out">
+        update hims_out SET
+        is_out = #{is_out},
+        out_operator = #{out_operator},
+        create_time = to_date(#{create_time,jdbcType=DATE},'yyyy-MM-dd hh24:mi:ss')
+        where reg_id = #{reg_id}
+    </update>
+    <update id="updateIn" parameterType="Registration">
+        update hims_registration
+        set out_flag = #{out_flag}
+        where reg_id = #{reg_id}
+    </update>
+    <select id="getDoc" parameterType="Registration" resultType="Staff">
+        select * from hims_staff where dep_name = #{dep_name} and staff_name = #{doc_name}
+    </select>
+    <update id="updateDoc" parameterType="Staff">
+        update hims_staff
+        set patient_num =#{patient_num,jdbcType=NUMERIC},
+        staff_flag = #{staff_flag}
+        where staff_id =#{staff_id}
+    </update>
+    <update id="updateBed" parameterType="Bed">
+        update hims_bed
+        set reg_id ='',
+        bed_flag = #{bed_flag},
+        doc_id = #{doc_id}
+        where reg_id =#{reg_id}
+
+    </update>
+    <select id="queryAdvice" parameterType="String" resultType="Advice">
+        select * from hims_advice where reg_id =#{reg_id}
+    </select>
+    <select id="queryDrug" parameterType="String" resultType="DrugDispatch">
+        select * from hims_medrecord where reg_id =#{reg_id}
+    </select>
+    <select id="queryDrugName" parameterType="String" resultType="String">
+        select drug_name from hims_drug where drug_id =#{drug_id}
+    </select>
+    <select id="getUsername" parameterType="String" resultType="String">
+        select u_username from hims_user where u_id = #{u_id}
+    </select>
+</mapper>

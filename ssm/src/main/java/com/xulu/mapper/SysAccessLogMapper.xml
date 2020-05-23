@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xulu.mapper.SysAccessLogMapper">
+    <select id="querySysLogList" parameterType="map" resultType="hashMap">
+         SELECT  to_char(accessDate,'yyyy-MM-dd HH24:mi:ss') accessDate,requestType,accessInterface,accessIp,interfaceParams
+         FROM tbsyslog
+         where accessDate BETWEEN to_date(#{beginTime,jdbcType=DATE},'yyyy-MM-dd HH24:mi:ss')
+         and  to_date(#{endTime,jdbcType=DATE},'yyyy-MM-dd HH24:mi:ss')
+         order by accessDate DESC
+     </select>
+     <insert id="saveSysLog" parameterType="map">
+         insert into  tbSysLog(sys_id,logId,accessDate,requestType,accessInterface,accessIp,interfaceParams)
+          values (seq_syslog.nextval,#{logId},#{accessDate},#{requestType},#{accessInterface},#{accessIp},#{interfaceParams})
+     </insert>
+
+</mapper>

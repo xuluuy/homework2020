@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xulu.mapper.TreatementMapper">
+   <insert id="createAdvice" parameterType="Advice">
+       insert into hims_advice VALUES
+       (seq_advice.nextval,#{advice_type},#{reg_id},#{reg_name},#{staff_id},#{diagnostic_code},
+       #{advice_detail},to_date(#{create_time,jdbcType=DATE},'yyyy-MM-dd'),
+       to_date(#{end_time,jdbcType=DATE},'yyyy-MM-dd'))
+   </insert>
+    <select id="queryAdvice" resultType="Advice">
+        select * from hims_advice
+    </select>
+    <select id="queryRegBed" parameterType="String" resultType="String">
+        select bed_name from hims_bed where reg_id = #{reg_id}
+    </select>
+    <insert id="createNurse" parameterType="NurseRecord">
+        insert into hims_nurserecord VALUES (
+        seq_nurse.nextval,#{reg_id},#{bed_id},#{staff_id},#{p_temperature},
+        #{heart_rate},#{blood_pressure},#{blood_sugar},#{remarks},
+        to_date(#{create_time,jdbcType=DATE},'yyyy-MM-dd hh24:mi:ss')
+        )
+    </insert>
+    <select id="queryNurseRecord" resultType="NurseRecord">
+        select * from hims_nurserecord
+    </select>
+    <select id="queryCreateTime" parameterType="String" resultType="NurseRecord">
+        select * from hims_nurserecord where reg_id = #{reg_id} ORDER BY create_time
+    </select>
+</mapper>

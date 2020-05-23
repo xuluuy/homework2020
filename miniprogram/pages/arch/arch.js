@@ -1,0 +1,95 @@
+// pages/arch/arch.js
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    name: 'name1',
+    loading:true
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    this.setData({
+      reg_id: options.reg_id
+
+    })
+      wx.request({
+        url: 'http://localhost:8080/api/inout/archives/detail/wx',
+          data: {
+            "reg_id": this.data.reg_id,
+          },
+          method: 'GET',
+          dataType: 'json',
+          header: {
+            'content-type': 'application/json' // 默认值
+          },
+          success: (response) => {
+            this.setData({
+              arch: response.data,
+              loading:false
+            })
+          },
+        fail: (res) => {
+          console.log(res);
+          wx.showToast({
+            title: '失败',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+        }) 
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  }
+})

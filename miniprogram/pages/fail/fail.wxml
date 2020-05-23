@@ -1,0 +1,4 @@
+<!--pages/404/404.wxml-->
+
+<view class="content"><image src="../../images/smile.png"></image>
+<text>\n 功能在完善中。。。</text></view>

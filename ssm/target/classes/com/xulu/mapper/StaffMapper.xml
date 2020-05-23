@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xulu.mapper.StaffMapper">
+    <select id="queryStaffList" parameterType="map" resultType="Staff">
+        select * from hims_staff order by staff_id
+    </select>
+    <update id="updateStaff" parameterType="Staff">
+        update hims_staff
+        set staff_sex = #{staff_sex,jdbcType=VARCHAR},
+        dep_name = #{dep_name,jdbcType=VARCHAR},
+        position = #{position,jdbcType=VARCHAR},
+        professional_title = #{professional_title,jdbcType=VARCHAR},
+        staff_flag = #{staff_flag,jdbcType=VARCHAR}
+        where staff_id = #{staff_id}
+    </update>
+    <insert id="addStaff" parameterType="Staff">
+        insert into hims_staff
+        (staff_id,staff_name,staff_phone,staff_flag,create_time)
+        values(#{staff_id},#{staff_name},#{staff_phone},'0',sysdate)
+    </insert>
+    <update id="addStaffRolename" parameterType="Staff">
+        update hims_staff
+        set role_name = #{role_name,jdbcType=VARCHAR},
+        staff_name = #{staff_name,jdbcType=VARCHAR},
+        staff_phone = #{staff_phone,jdbcType=VARCHAR}
+        where staff_id = #{staff_id}
+    </update>
+    <delete id="deleteByUid" parameterType="String">
+        delete from hims_staff where staff_id = #{staff_id}
+    </delete>
+    <select id="queryDoc" parameterType="String" resultType="Staff">
+       select staff_name,patient_num from hims_staff where dep_name = #{dep_name} and role_name = '医生'
+    </select>
+    <select id="queryPatientNum" parameterType="String" resultType="int">
+        select patient_num from hims_staff where staff_name = #{staff_name}
+    </select>
+    <update id="updatePatientNum" parameterType="Staff">
+        update hims_staff
+        set patient_num = #{patient_num,jdbcType=NUMERIC}
+        where staff_name = #{staff_name}
+    </update>
+</mapper>

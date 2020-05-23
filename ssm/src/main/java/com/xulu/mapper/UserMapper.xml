@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xulu.mapper.UserMapper">
+   <!-- <select id="queryStaffList" parameterType="map" resultType="Staff">
+        select * from hims_staff
+        <where>
+            <if test="staff_name!=null and staff_name!=''">
+                staff_name like concat('%',#{staff_name},'%')
+            </if>
+            <if test="staff_sex!=null and staff_sex!=''">
+                and staff_sex=#{staff_sex}
+            </if>
+        </where>
+    </select>
+    <select id="queryStaff" parameterType="map" resultType="Staff">
+        select * from hims_staff where staff_id=#{staff_id} and staff_password=#{staff_password}
+    </select>-->
+
+    <!--!!!!!!!!!开始-->
+    <select id="findByUserName" parameterType="String" resultType="User">
+        select * from hims_user where u_username=#{u_username}
+    </select>
+     <select id="findByUnameAndUtype" parameterType="User" resultType="int">
+         SELECT COUNT(1) FROM hims_user WHERE u_username=#{u_username} AND u_type=#{u_type}
+     </select>
+    <select id="queryIsEnabled" parameterType="User" resultType="int">
+        SELECT COUNT(1) FROM hims_user WHERE u_username=#{u_username} AND u_enabled='1'
+    </select>
+    <insert id="addUser" parameterType="User" >
+       INSERT INTO hims_user(u_id,u_username,u_password,u_salt,u_name,u_phone,u_email,u_type)VALUES(seq_user.nextval,#{u_username},#{u_password},#{u_salt},#{u_name},#{u_phone},#{u_email},#{u_type})
+    </insert>
+    <select id="queryMaxUid" resultType="int">
+        SELECT max(cast(u_id   as   int)) FROM hims_user
+    </select>
+    <insert id="addUserRole" parameterType="AdminUserRole">
+        insert into hims_user_role values(seq_user_role.nextval,#{u_id},#{r_id})
+    </insert>
+    <select id="list" resultType="user">
+        select * from hims_user order by u_id
+    </select>
+    <select id="listroles" resultType="AdminRole">
+        select * from hims_role order by r_id
+    </select>
+
+    <update id="updateUser" parameterType="User" >
+        update hims_user
+        set  u_name = #{u_name,jdbcType=VARCHAR},
+        u_phone = #{u_phone,jdbcType=VARCHAR},
+        u_email = #{u_email,jdbcType=VARCHAR}
+        where u_id=#{u_id}
+    </update>
+    <update id="updateUserRole" parameterType="AdminUserRole" >
+        update hims_user_role
+        set  r_id = #{r_id,jdbcType=VARCHAR}
+        where u_id=#{u_id}
+    </update>
+    <update id="updatePassword" parameterType="User">
+        update hims_user
+        set u_password = #{u_password,jdbcType=VARCHAR}
+        where u_username =#{u_username}
+    </update>
+    <delete id="deleteUser" parameterType="String">
+        delete from hims_user where u_id=#{u_id}
+    </delete>
+    <update id="updateUstatus" parameterType="User">
+        update hims_user
+        set u_enabled = #{u_enabled,jdbcType=VARCHAR}
+        where u_username =#{u_username}
+    </update>
+
+</mapper>

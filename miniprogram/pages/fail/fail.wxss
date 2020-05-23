@@ -1,0 +1,9 @@
+/* pages/404/404.wxss */
+page{
+  background: #f7f4f4;
+    color:rgb(39, 37, 37);
+}
+.content{
+ margin: 250rpx auto;
+ text-align: center;
+}

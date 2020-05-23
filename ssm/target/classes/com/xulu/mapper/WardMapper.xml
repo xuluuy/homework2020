@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xulu.mapper.WardMapper">
+    <select id="queryWardList" resultType="Ward">
+       select * from hims_ward order by ward_id
+   </select>
+    <select id="queryWardsList" resultType="Ward">
+        SELECT DISTINCT ward_name  from hims_ward
+    </select>
+    <update id="updateWard" parameterType="Ward">
+       update hims_ward
+       set ward_name = #{ward_name,jdbcType=VARCHAR},
+       dep_name = #{dep_name,jdbcType=VARCHAR},
+       bed_type = #{bed_type,jdbcType=VARCHAR},
+       total_bed = #{total_bed,jdbcType=NUMERIC},
+       remain_bed = #{remain_bed,jdbcType=NUMERIC},
+       bed_price = #{bed_price,jdbcType=NUMERIC}
+       where ward_id = #{ward_id,jdbcType=VARCHAR}
+   </update>
+    <select id="quaryMaxId" resultType="int">
+        select max(cast(ward_id   as   int)) from hims_ward
+    </select>
+    <insert id="createWard" parameterType="Ward">
+        insert into hims_ward VALUES
+        (#{ward_id},#{ward_name},#{dep_name},#{bed_type},
+        #{total_bed,jdbcType=NUMERIC},#{remain_bed,jdbcType=NUMERIC},
+        #{bed_price,jdbcType=NUMERIC})
+    </insert>
+    <delete id="deleteWard" parameterType="String">
+        delete from hims_ward where ward_id = #{ward_id}
+    </delete>
+    <insert id="createBed" parameterType="Bed">
+        insert into hims_bed (bed_id,bed_name,ward_id) VALUES
+        (seq_bed.nextval,#{bed_name},#{ward_id})
+    </insert>
+    <delete id="deleteBed" parameterType="String">
+        delete from hims_bed where ward_id = #{ward_id}
+    </delete>
+    <select id="queryWard_Id" parameterType="Ward" resultType="String">
+        select ward_id from hims_ward where ward_name = #{ward_name} and bed_type = #{bed_type}
+    </select>
+    <select id="queryWnameByid" parameterType="String" resultType="String">
+        select ward_name from hims_ward where ward_id = #{ward_id}
+    </select>
+    <select id="quaryBedType" parameterType="String" resultType="Ward">
+        select bed_type from hims_ward where ward_name = #{ward_name}
+    </select>
+    <select id="queryBed" parameterType="String" resultType="Bed">
+        select bed_name from hims_bed where ward_id = #{ward_id} and bed_flag = '0'
+    </select>
+    <select id="queryward" parameterType="Ward" resultType="Ward">
+        select * from hims_ward where ward_name = #{ward_name} and bed_type = #{bed_type}
+    </select>
+    <update id="updateRemainBed" parameterType="Ward">
+        update hims_ward
+        set remain_bed = #{remain_bed,jdbcType = NUMERIC}
+        where ward_id =#{ward_id}
+    </update>
+    <update id="updateBedName" parameterType="Bed">
+        update hims_bed
+        set reg_id = #{reg_id},
+        doc_id =#{doc_id},
+        bed_flag = '1'
+        where bed_name =#{bed_name} and ward_id =#{ward_id}
+    </update>
+</mapper>

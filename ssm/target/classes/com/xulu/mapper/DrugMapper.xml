@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xulu.mapper.DrugMapper">
+   <select id="queryDrugList" resultType="Drug">
+       select * from hims_drug
+   </select>
+    <update id="updateDrug" parameterType="Drug">
+        update hims_drug
+        set drug_name = #{drug_name,jdbcType=VARCHAR},
+        drug_price = #{drug_price,jdbcType=NUMERIC},
+        drug_supply = #{drug_supply,jdbcType=VARCHAR},
+        drug_quantity = #{drug_quantity,jdbcType=NUMERIC},
+        drug_exp = to_date(#{drug_exp,jdbcType=DATE},'yyyy-MM-dd'),
+        drug_operator = #{drug_operator,jdbcType=VARCHAR}
+        where drug_id = #{drug_id}
+    </update>
+    <select id="quaryMaxId" resultType="int">
+        SELECT MAX(cast(drug_id   as   int)) FROM hims_drug
+    </select>
+    <insert id="createDrug" parameterType="Drug">
+        insert into hims_drug values
+        (#{drug_id},#{drug_name},#{drug_price,jdbcType=NUMERIC},
+        #{drug_supply},#{drug_quantity,jdbcType=NUMERIC},
+        to_date(#{drug_exp,jdbcType=DATE},'yyyy-MM-dd'),
+        #{drug_operator})
+    </insert>
+    <delete id="deleteDrug" parameterType="String">
+        delete from hims_drug where drug_id = #{drug_id}
+    </delete>
+    <insert id="createDispatch" parameterType="DrugDispatch">
+        insert into hims_medrecord values (
+        seq_medrecord.nextval,
+        #{drug_id},#{drug_num,jdbcType=NUMERIC},#{drug_price,jdbcType=NUMERIC},#{reg_id},#{staff_id},sysdate
+        )
+    </insert>
+    <select id="queryDrug" parameterType="String" resultType="Drug">
+        select * from hims_drug where drug_id =#{drug_id}
+    </select>
+    <update id="updateDrugQuantity" parameterType="Drug">
+      update hims_drug set drug_quantity = #{drug_quantity,jdbcType=NUMERIC} where drug_id = #{drug_id}
+    </update>
+    <select id="queryDispatch" resultType="DrugDispatch">
+        select * from hims_medrecord
+    </select>
+</mapper>

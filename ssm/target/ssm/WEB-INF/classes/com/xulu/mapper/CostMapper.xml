@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xulu.mapper.CostMapper">
+   <select id="queryPreid" resultType="int">
+       SELECT seq_pre_payment.nextval as id FROM dual
+   </select>
+    <insert id="createPrepayment" parameterType="Prepayment">
+        insert into hims_prepayment values (
+        #{pre_id},
+        #{reg_id},
+        #{pre_amount,jdbcType=NUMERIC},
+        #{operator_uname},
+        to_date(#{create_time,jdbcType=DATE},'yyyy-MM-dd hh24:mi:ss'))
+    </insert>
+    <insert id="createCost" parameterType="Cost">
+        insert into hims_cost (cost_id,reg_id,cost_type)VALUES(seq_cost.nextval,#{reg_id},'未结算')
+    </insert>
+    <select id="queryCost" parameterType="String" resultType="Cost">
+        select * from hims_cost where reg_id =#{reg_id}
+    </select>
+    <insert id="createCostDetail" parameterType="CostDetail">
+        insert into hims_expdetail values (
+        seq_expdetail.nextval,#{cost_id},#{charge_code},#{charge_amount,jdbcType=NUMERIC}
+        )
+    </insert>
+    <select id="queryCostList" resultType="Cost">
+        select * from hims_cost
+    </select>
+    <select id="queryDays" parameterType="Cost" resultType="int">
+        select to_date(#{day_end},'yyyy-MM-dd')-to_date(#{day_create},'yyyy-MM-dd') from dual
+    </select>
+    <select id="queryCostBedDetail" parameterType="String" resultType="CostDetail">
+        select * from hims_expdetail where cost_id =#{cost_id} and charge_code = 'BED01'
+    </select>
+    <select id="queryCostDetail" parameterType="String" resultType="CostDetail">
+        select * from hims_expdetail where cost_id =#{cost_id}
+    </select>
+    <select id="queryPrice" parameterType="Registration" resultType="Ward">
+        select * from hims_ward where ward_name=#{ward_name} and bed_type=#{bed_type}
+    </select>
+    <delete id="deleteBedPrice" parameterType="String">
+        delete from hims_expdetail where cost_id =#{cost_id} and charge_code = 'BED01'
+    </delete>
+    <select id="querySum" parameterType="String" resultType="double">
+        SELECT SUM(charge_amount) FROM hims_expdetail WHERE cost_id = #{cost_id}
+    </select>
+    <update id="updateCost" parameterType="Cost">
+        update hims_cost
+        set cost_amount = #{cost_amount,jdbcType=NUMERIC},
+        cost_operator = #{cost_operator},
+        create_time = to_date(#{create_time,jdbcType=DATE},'yyyy-MM-dd hh24:mi:ss'),
+        cost_type = #{cost_type}
+        where reg_id = #{reg_id}
+    </update>
+    <update id="updateOut" parameterType="Cost">
+        update hims_out
+        set is_cost = '已结算'
+        where reg_id = #{reg_id}
+    </update>
+</mapper>

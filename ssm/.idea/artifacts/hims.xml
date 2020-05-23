@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="hims">
+    <output-path>$PROJECT_DIR$/out/artifacts/hims</output-path>
+    <root id="archive" name="hims.war">
+      <element id="directory" name="hims_server">
+        <element id="module-output" name="ssm" />
+      </element>
+    </root>
+  </artifact>
+</component>

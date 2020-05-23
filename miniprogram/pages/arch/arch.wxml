@@ -1,0 +1,74 @@
+<!--pages/arch/arch.wxml-->
+<i-load-more wx:if="{{loading}}" loading="{{loading}}"/>
+<view wx:if="{{!loading}}" class="caption-wrap">
+    <view class="caption-title">住院清单</view>
+    <i-collapse name="{{name}}" accordion>
+        <i-collapse-item title="入院信息" class="title" name="name1">
+            <view slot="content">
+               <text class="content">
+               <text class="label"> 入院编号：</text>{{arch.regs.reg_id}}
+               <text class="label"> 姓名：</text>{{arch.regs.reg_name}}
+               <text class="label"> 用户名：</text>{{arch.regs.reg_username}}
+               <text class="label"> 性别：</text>{{arch.regs.reg_sex}}
+               <text class="label"> 年龄：</text>{{arch.regs.reg_age}}
+               <text class="label"> 身份证：</text>{{arch.regs.reg_identity}}
+               <text class="label"> 预缴费：</text>{{arch.regs.pre_amount}}
+               <text class="label"> 收治科室：</text>{{arch.regs.dep_name}}
+                <text class="label"> 主管医生：</text>{{arch.regs.doc_name}}
+                <text class="label"> 病情：</text>{{arch.regs.condition}}
+                 <text class="label"> 所在病区：</text>{{arch.regs.ward_name}}
+                  <text class="label"> 病房类型：</text>{{arch.regs.bed_type}}
+                  <text class="label"> 病床：</text>{{arch.regs.bed_name}}
+               </text>
+            </view>
+        </i-collapse-item>
+        <i-collapse-item title="医嘱信息" class="title" name="name2">
+            <view slot="content">
+               <view class="table content">
+                <view class="tr bg-w">
+                  <view class="th">期效</view>
+                  <view class="th">详细医嘱</view>
+                  <view class="th">诊断代码</view>
+                </view>
+                <block wx:for="{{arch.advice}}" wx:key="index">
+                  <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
+                    <view class="td">{{item.advice_type}}</view>
+                    <view class="td">{{item.advice_detail}}</view>
+                    <view class="td">{{item.diagnostic_code}}</view>
+                  </view>
+                  <view class="tr bg-w" wx:else>
+                    <view class="td">{{item.advice_type}}</view>
+                    <view class="td">{{item.advice_detail}}</view>
+                    <view class="td">{{item.diagnostic_code}}</view>
+                  </view>
+                </block>
+              </view>
+            </view>
+        </i-collapse-item>
+        <i-collapse-item title="用药信息" class="title" name="name3">
+            <view slot="content">
+                <view class="table content">
+                <view class="tr bg-w">
+                  <view class="th">药品</view>
+                  <view class="th">数量(个)</view>
+                  <view class="th">价格(元)</view>
+                </view>
+                <block wx:for="{{arch.drugs}}" wx:key="index">
+                  <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
+                    <view class="td">{{item.drug_name}}</view>
+                    <view class="td">{{item.drug_num}}</view>
+                    <view class="td">{{item.drug_price}}</view>
+                  </view>
+                  <view class="tr bg-w" wx:else>
+                    <view class="td">{{item.drug_name}}</view>
+                    <view class="td">{{item.drug_num}}</view>
+                    <view class="td">{{item.drug_price}}</view>
+                  </view>
+                </block>
+              </view>
+            </view>
+        </i-collapse-item>
+    </i-collapse>
+</view>
+
+

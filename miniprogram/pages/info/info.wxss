@@ -1,0 +1,66 @@
+/* pages/info/info.wxss */
+.box{
+  margin: 20rpx ;
+  border:1rpx solid #eee;
+  border-radius: 10rpx;
+  background: #fff;
+  padding-left:10rpx; 
+  padding-top: 30rpx;
+}
+.title{
+  color: #999;
+}
+.bg{
+  width: 90%;
+  background: -webkit-linear-gradient(left,	rgb(63, 167, 231)	,#87CEEB);
+  box-shadow: 0px 7px 7px -7px  #ccc;
+  padding-left: 35rpx;
+  padding-bottom: 10rpx;
+  border-radius:  10rpx;
+  position: relative;
+  margin: 20rpx 0 20rpx 15rpx;
+}
+.font{
+ color: #fff;
+ font-weight: bold;
+}
+.detail{
+  font-weight: 100;
+}
+page{
+  background: #f7f4f4;
+}
+.circle{
+  width: 100rpx;
+  height: 100rpx;
+  position: absolute;
+  display: inline-block;
+  right: 60rpx;
+  top: 35rpx;
+  opacity: .5;  
+}
+.bg2{
+   background: -webkit-linear-gradient(left,	#EE7942	,#F4A460);
+}
+.more{
+ height: 200rpx;
+}
+.person{
+  width: 30%;
+  height: 200rpx;
+  text-align: center;
+  display: inline-block;
+  color:#4F4F4F;
+}
+.bgcircle{
+  width: 120rpx;
+  height: 120rpx;
+  background: -webkit-linear-gradient(top,		#FF69B4	,#F4A460);
+  border-radius: 60rpx;
+  margin: 10rpx auto;
+}
+.bgicon{
+  width: 80rpx;
+  height: 80rpx;
+  margin: 20rpx auto;
+}

@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/home/home",
+    "pages/info/info",
+    "pages/fail/fail",
+    "pages/cost/cost",
+    "pages/arch/arch",
+    "pages/logs/logs"
+    
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#425d8a",
+    "navigationBarTitleText": "住院信息查询",
+    "navigationBarTextStyle": "white"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

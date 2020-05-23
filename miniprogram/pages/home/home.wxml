@@ -1,0 +1,34 @@
+<!--pages/home/home.wxml-->
+<view>
+<swiper autoplay indicator-dots circular>
+<swiper-item>
+<image mode="widthFix" src="../../images/swiper1.jpg"></image>
+</swiper-item>
+<swiper-item>
+<image mode="widthFix" src="../../images/swiper2.jpg"></image>
+</swiper-item>
+<swiper-item>
+<image mode="widthFix" src="../../images/swiper3.jpg"></image>
+</swiper-item>
+<swiper-item>
+<image mode="widthFix" src="../../images/swiper4.jpg"></image>
+</swiper-item>
+<swiper-item>
+<image mode="widthFix" src="../../images/swiper5.jpg"></image>
+</swiper-item>
+</swiper>
+<view class="box">
+<view class="title">欢迎您使用住院信息查询系统</view>
+<view class="detail">请扫描预缴费凭据中的二维码获取住院相关信息</view>
+<button class='deaBtn' bindtap='scancode'><image src="../../images/扫描二维码.png"></image>扫描二维码</button>
+</view>
+<view class="box font">
+<text>
+注意事项：\n
+1.本系统只能通过扫描预缴费凭据中的二维码进行登录。 \n
+2.每次进入小程序后需重新扫描二维码进行登录。 \n
+3.本系统只查询本次入院治疗、收费等相关信息。
+</text>
+</view>
+</view>
+

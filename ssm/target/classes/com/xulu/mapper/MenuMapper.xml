@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xulu.mapper.MenuMapper">
+
+    <select id="findMenuById" parameterType="String" resultType="AdminMenu">
+        select * from hims_menu where m_id=#{m_id}
+    </select>
+    <select id="findMenuAllByParentId" parameterType="String" resultType="AdminMenu">
+        select * from hims_menu where m_parent_id=#{m_parent_id}
+    </select>
+
+    <select id="findRoleById" parameterType="String" resultType="AdminRole">
+        select * from hims_role where r_id=#{r_id}
+    </select>
+    <select id="findAllRMByRid" parameterType="String" resultType="AdminRoleMenu">
+        select * from hims_role_menu where r_id=#{r_id}
+    </select>
+    <delete id="deleteAllRMByRid" parameterType="String">
+        delete from hims_role_menu where r_id=#{r_id}
+    </delete>
+    <select id="findAllByUid" parameterType="String" resultType="AdminUserRole">
+        select * from hims_user_role where u_id=#{u_id}
+    </select>
+    <delete id="deleteAllByUid" parameterType="String">
+        delete from hims_user_role where u_id=#{u_id}
+    </delete>
+    <insert id="updateRRoleMenu" parameterType="AdminRoleMenu">
+        insert into hims_role_menu
+        values (seq_role_menu.nextval,#{r_id},#{m_id})
+    </insert>
+    <select id="queryMaxRid" resultType="int">
+        select max(cast(r_id   as   int)) from hims_role
+    </select>
+    <insert id="createRole" parameterType="AdminRole">
+        insert into hims_role
+        values(#{r_id},#{r_name},#{r_name_zh},'1')
+    </insert>
+</mapper>
